@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'core/config/supabase_config.dart';
-import 'core/theme/app_theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
   await Supabase.initialize(
-    url: SupabaseConfig.url,
-    anonKey: SupabaseConfig.anonKey,
+    url: 'https://YOUR_SUPABASE_URL.supabase.co', 
+    anonKey: 'YOUR_SUPABASE_ANON_KEY'
   );
   runApp(const ProviderScope(child: QuantumApp()));
 }
@@ -23,11 +19,10 @@ class QuantumApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
     return MaterialApp.router(
-      title: 'Quantum',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
+      routerConfig: router, 
+      title: 'Quantum', 
+      theme: AppTheme.lightTheme, 
+      debugShowCheckedModeBanner: false
     );
   }
 }
